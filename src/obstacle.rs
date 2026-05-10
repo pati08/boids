@@ -1,10 +1,11 @@
-use nannou::glam::Vec2;
+use nannou::{Draw, color::RED, glam::Vec2};
 
 pub trait Obstacle {
     fn ray_test(&self, u: Vec2, v: Vec2) -> f32;
     fn desc(&self) -> String {
         String::from("unnamed obstacle")
     }
+    fn draw(&self, draw: &Draw) {}
 }
 
 pub struct Circle {
@@ -41,6 +42,9 @@ impl Obstacle for Circle {
     }
     fn desc(&self) -> String {
         format!("circle at {:?} with radius {}", self.pos, self.radius)
+    }
+    fn draw(&self, draw: &Draw) {
+        draw.ellipse().xy(self.pos).radius(self.radius).color(RED);
     }
 }
 
